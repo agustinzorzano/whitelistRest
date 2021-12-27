@@ -10,5 +10,9 @@ router.post('/register', checkBody('/register-body', registerBodyPrototype), reg
 router.get('/auth/connect', async (_req, res) => {
     res.status(200).send({ connected: true })
 })
+router.get('/logout', async (_req, res) => {
+    res.clearCookie('authcookie');
+    res.status(204).send()
+})
 
 exports.router = router

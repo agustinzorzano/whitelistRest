@@ -84,7 +84,7 @@ const deleteEmailService = id => Quarantine.update({ to_eliminate: true }, { whe
 const restoreEmailForCaptchaService = async (id, sender) => {
     /** @type QuarantineObject */
     const email = await Quarantine.findOne({
-        where: { id: id, email_sender: sender }
+        where: { id: id, email_sender: sender, to_eliminate: false, to_restore: false, was_restored: false }
     })
     if (!email) return undefined
     return restoreEmailService(email.id)
