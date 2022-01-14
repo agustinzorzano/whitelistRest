@@ -1,14 +1,30 @@
 # whitelistRest
 
+Project that consists in the development of an anti-spam application which is divided in
+three parts:
+
+* [Frontend](https://github.com/agustinzorzano/listeBlancheFrontend)
+* [API](https://github.com/agustinzorzano/whitelistRest)
+* [Backend scripts](https://github.com/agustinzorzano/liste_blanche_backend) 
+
+In this repository we have defined the API using NodeJS. The website interface
+will use the API to obtain all the information that is going to show such as
+the emails in quarantine, the email addresses in the blacklist or in the whitelist, etc.
+It will also be used for the management of the blacklist and the whitelist. 
+
+The project was developed during an academic exchange in France in the University "IMT Atlantique"
+and it was used as a final academic work in the University "Universidad de Buenos Aires".
+
+
 ## Requirement
 
 npm
 
-Serveur MariaDB
+Server MariaDB
 
 ## Getting started
 
-Avant toute chose, lancer le serveur MariaDB.
+First of all, run MariaDB
 
 ### Installation des packages
 
