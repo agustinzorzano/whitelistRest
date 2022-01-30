@@ -29,11 +29,15 @@ const findNonExistingClientId = () => findNonExistingId(doClientIdExist)
 
 /**
  * Create a client_id with a new value for the selected email.
- * @param {number} id - The real id of the email in the Quarantine table
- * @returns
+ * @param {QuarantineObject} email - The real id of the email in the Quarantine table
+ * @returns {QuarantineObject}
  */
-const createEmailClientId = async id =>
-    Quarantine.update({ client_id: await findNonExistingClientId() }, { where: { id: id } })
+const createEmailClientId = async email => {
+    const client_id = await findNonExistingClientId()
+    await Quarantine.update({client_id: client_id}, {where: {id: email.id}})
+    email.client_id = client_id
+    return email
+}
 
 /**
  * Find the email among the user emails
@@ -64,7 +68,13 @@ const getAllEmailsService = async user_id => {
     })
     // createEmailClientId is asynchronous, so we launch all operations in parallel here
     await Promise.all(
-        emails.filter(email => email.client_id === null).map(email => createEmailClientId(email.id))
+        emails.map(email => {
+            if (email.client_id === null) {
+                return createEmailClientId(email)
+            } else {
+                return email
+            }
+            })
     )
     return emails
 }
@@ -84,7 +94,7 @@ const deleteEmailService = id => Quarantine.update({ to_eliminate: true }, { whe
 const restoreEmailForCaptchaService = async (id, sender) => {
     /** @type QuarantineObject */
     const email = await Quarantine.findOne({
-        where: { id: id, email_sender: sender }
+        where: { id: id, email_sender: sender, to_eliminate: false, to_restore: false, was_restored: false }
     })
     if (!email) return undefined
     return restoreEmailService(email.id)

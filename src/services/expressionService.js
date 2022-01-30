@@ -5,7 +5,7 @@ const { WhiteListRegularExpression, BlackListRegularExpression } = require('../m
  * Find if the expression belongs to a regularExpression table or a list table
  * @param {string} expression
  */
-const isExpression = expression => expression.match(/.*\*.*/) === []
+const isExpression = expression => /.*\*.*/.test(expression)
 
 const replaceAllRegexSpecial = str => {
     var mystr = str

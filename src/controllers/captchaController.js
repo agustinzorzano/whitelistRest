@@ -53,7 +53,10 @@ exports.verifyEmail = async (req, res) => {
         const response = await verifyCaptcha(data.captchaToken)
         if (response.data.success) {
             const email = await restoreEmailForCaptchaService(emailId, data.email)
-            if (!email) res.status(404).json(this.emailNotFoundCaptchaError)
+            if (!email) {
+                res.status(404).json(this.emailNotFoundCaptchaError)
+                return
+            }
             await createListElementService(true, email.email_sender, email.fk_user)
             await sendRestoreSignal(email.fk_user)
             res.status(200).json(this.validatedCaptchaMessage)

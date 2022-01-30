@@ -69,7 +69,7 @@ exports.putInList = isWhite =>
                 )
                 await handleSenderEmails(email.fk_user, email.email_sender, !isWhite)
                 await sendRestoreSignal(email.fk_user)
-                res.status(201).send(result.email)
+                res.status(204).send()
             }
         } catch (err) {
             console.log(JSON.stringify(err))
