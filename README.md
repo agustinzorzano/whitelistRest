@@ -26,15 +26,15 @@ Server MariaDB
 
 First of all, run MariaDB
 
-### Installation des packages
+### Install packages
 
 `npm install`
 
-### Création de la clé dans la racine du projet
+### Key creation in the root of the project
 
-Un fichier `private.pem` contenant un secret doit se trouver dans la racine du projet.
+A file `private.pem` containing a secret key must be in the root of the project.
 
-Pour en créer un, par exemple :
+To create one:
 
 ```text
 > ssh-keygen
@@ -42,38 +42,38 @@ Generating public/private rsa key pair.
 Enter file in which to save the key (.../.ssh/id_rsa) : private.pem
 ```
 
-### Définition des variables d'environnement
+### Setting environment variables
 
-Créer un fichier appelé `.env` avec toutes les variables d'environnement nécessaires.
-Avec openssl tu crées une clé privée, puis tu extrais une clé publique de la clé privée, ensuite tu mets le chemin de cette clé publique dans le .env (et la clé privé, pour l'instant, doit se trouver dans la racine et s'appeler private.pem).
-Par exemple:
+Create a file named `.env` with all the necessary environment variables.
+With openssl you can create a private key and a public key. The path to the public key should be added to the .env file (the private key should be at the root and should be called private.pem).
+For example:
 
 ```text
-RECAPTCHA_TOKEN=<clé secrète de recaptcha>
-PUBLIC_KEY_PATH=<chemin vers la clé de chiffrement>
-ORIGIN_URI=<URI du frontend, ex: http://localhost:4200>
-BACKEND_URI=<URI du frontend, ex: http://localhost:5000>
+RECAPTCHA_TOKEN=<Recaptcha secret key>
+PUBLIC_KEY_PATH=<path to the public key>
+ORIGIN_URI=<frontend URI, ex: http://localhost:4200>
+BACKEND_URI=<backend URI, ex: http://localhost:5000>
 DB_NAME=whitelist
-DB_USERNAME=<nom d'utilisateur avec lequel on accède à la base de données>
-DB_PASSWORD=<mot de passe de cet utilisateur>
+DB_USERNAME=<database username used to access the database>
+DB_PASSWORD=<password of the database user>
 DB_HOST=localhost
 DB_DIALECT=mariadb
 ```
 
-### Lancement du serveur
+### Start the server
 
 `npm start`
 
-### Exécution avec Docker
+### Execute with Docker
 
-Construire le container
+Build the container
 
 `sudo docker build -t project_api .`
 
-Exécuter le container
+Execute the container
 
 `sudo docker run -it --init --env-file <Path to .env file> -p 8070:8070 project_api`
 
 ### Documentation
 
-Accéder via un navigateur au chemin <URI_API>/docs pour avoir une description de chaque route (il en manque encore certaines)
+Go to <URI_API>/docs with the browser to have access to the documentation of the API
